@@ -1,7 +1,7 @@
 const PAGETOKEN = require('../config.json')
 const request = require('request')
 module.exports = messengerController = async (req, res, next) => {
-
+// /https://github.com/amuramoto/messenger-node
     if (req.body.object === 'page') {
         req.body.entry.forEach(function(entry) {
             
@@ -11,8 +11,10 @@ module.exports = messengerController = async (req, res, next) => {
                     let senderID = event.sender.id
                     let recipientID = event.recipient.id
                     let messageBody = event.message
+                    let messageText = event.message.text
+                    let messageID = event.message.mid
                     console.log(messageBody)
-                    handleMessage(senderID, recipientID, messageBody)
+                    handleMessage(senderID, recipientID, messageText)
                 }
             })
         })
@@ -31,8 +33,8 @@ function handleMessage(sender_psid, recipientID, received_message) {
   let response;
   
   // Checks if the message contains text
-  if (received_message["text"]) {    
-      console.log(received_message["text"],received_message.text)
+  if (received_message) {    
+      console.log(received_message,received_message.text)
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
     response = {
@@ -94,7 +96,7 @@ function callSendAPI(sender_psid, recipientID, response) {
   // Construct the message body
   let re_body = {
     'message': {
-        'text': response.text
+        'text': response
     },
     'recipient': {
         'id': sender_psid
