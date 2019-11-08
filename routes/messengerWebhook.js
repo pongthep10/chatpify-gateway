@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   messengerVerifyWebhook(req, res, next)
 });
 
-router.post('/messenger-webhook', function(req, res, next) {
+router.post('/', function(req, res, next) {
   messengerController(req, res, next)
 });
 
