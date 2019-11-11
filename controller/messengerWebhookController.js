@@ -1,4 +1,4 @@
-const PAGETOKEN = require('../config.json')
+const CRED = require('../credentials/facebookPage.json')
 const request = require('request')
 module.exports = messengerController = async (req, res, next) => {
 // /https://github.com/amuramoto/messenger-node
@@ -8,13 +8,16 @@ module.exports = messengerController = async (req, res, next) => {
             entry.messaging.forEach(function (event) {  
                 
                 if (event.message && event.message.text) {
-                    let senderID = event.sender.id
-                    let recipientID = event.recipient.id
-                    let messageBody = event.message
-                    let messageText = event.message.text
-                    let messageID = event.message.mid
+                    var messageType = "message"
+                    var senderID = event.sender.id
+                    var recipientID = event.recipient.id
+                    var messageBody = event.message
+                    var messageText = event.message.text
+                    var messageID = event.message.mid
                     console.log(messageBody)
                     handleMessage(senderID, recipientID, messageText)
+                } else if {
+                    (event.message && event.message.text)
                 }
             })
         })
@@ -34,7 +37,7 @@ function handleMessage(sender_psid, recipientID, received_message) {
   
   // Checks if the message contains text
   if (received_message) {    
-      console.log(received_message,received_message.text)
+    // console.log(received_message,received_message.text)
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
     response = {
@@ -107,7 +110,7 @@ function callSendAPI(sender_psid, recipientID, response) {
   // Send the HTTP request to the Messenger Platform
   request({
     "uri": "https://graph.facebook.com/v2.6/me/messages",
-    "qs": { "access_token": PAGETOKEN[recipientID] },
+    "qs": { "access_token": CRED[recipientID] },
     "method": "POST",
     "json": re_body
   }, (err, res, body) => {
