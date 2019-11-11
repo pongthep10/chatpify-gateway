@@ -1,3 +1,4 @@
 node_modules/
 facebook-messenger-bot-master/
-config.json/
+config.json
+credentials/
